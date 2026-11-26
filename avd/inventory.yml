@@ -1,0 +1,54 @@
+---
+# inventory.yml
+all:
+  hosts:
+    cloudvision:
+  children:
+    FABRIC:
+      children:
+        DC1:
+          children:
+            DC1_SPINES:
+              hosts:
+                acb-spine1:
+                  ansible_host: 172.16.1.11
+                  # is_deployed: false
+                acb-spine2:
+                  ansible_host: 172.16.1.12
+                  # is_deployed: false
+            DC1_LEAVES:
+              children:
+                DC1_RACK1:
+                  hosts:
+                    acb-leaf1a:
+                      ansible_host: 172.16.1.13
+                    acb-leaf1b:
+                      ansible_host: 172.16.1.14
+                DC1_RACK2:
+                  hosts:
+                    acb-leaf2a:
+                      ansible_host: 172.16.1.15
+                    acb-leaf2b:
+                      ansible_host: 172.16.1.16
+                # DC1_RACK3:
+                #   hosts:
+                #     acb-leaf3a:
+                #       ansible_host: 172.16.1.17
+                #     acb-leaf3b:
+                #       ansible_host: 172.16.1.18
+
+    TENANTS:
+      children:
+        DC1_LEAVES:
+
+    ENDPOINTS:
+      children:
+        DC1_ENDPOINTS_RACK1:
+          children:
+            DC1_RACK1:
+        DC1_ENDPOINTS_RACK2:
+          children:
+            DC1_RACK2:
+        # DC1_ENDPOINTS_RACK3:
+        #   children:
+        #     DC1_RACK3:

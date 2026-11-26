@@ -1,0 +1,65 @@
+---
+
+RED:
+  - name: "RED"
+    mac_vrf_vni_base: 10000
+    enable_mlag_ibgp_peering_vrfs: true
+    igmp_snooping:
+      querier:
+        enabled: true
+        version: 3
+      fast_leave: false
+    evpn_l2_multicast:
+      enabled: true
+      underlay_l2_multicast_group_ipv4_pool: 232.10.16.0/20
+    evpn_l3_multicast:
+      enabled: true
+      evpn_underlay_l3_multicast_group_ipv4_pool: 232.10.0.0/20
+    vrfs:
+      - name: "RED"
+        vrf_vni: 1001
+        vtep_diagnostic:
+          loopback: 101
+          loopback_ip_range: 10.100.101.0/24
+          loopback_ipv6_range: 2001:db8:100:101::/64
+        svis:
+          - id: 10
+            name: v10
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.10.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:10::254/64
+          - id: 20
+            name: v20
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.20.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:20::254/64
+          - id: 30
+            name: v30
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.30.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:30::254/64
+          - id: 40
+            name: v40
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.40.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:40::254/64
+          - id: 50
+            name: v50
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.50.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:50::254/64

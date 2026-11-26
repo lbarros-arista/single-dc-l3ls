@@ -1,0 +1,4 @@
+anta_inventory:
+  ranges:
+    - start: 172.16.1.11
+      end: 172.16.1.16

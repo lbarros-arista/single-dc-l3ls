@@ -1,0 +1,24 @@
+---
+
+aaa_settings:
+  local_users:
+    - name: admin
+      privilege: 15
+      role: network-admin
+      # Password set to "admin".
+      sha512_password: $6$X2g//gZ6.b8yAr2t$FCWeppCy64J/.bZVAMkhscGcv2h3DPKYOLAs63ziSkgaXoUyNjgrVygdnWf2yNVzHfAa1pYkJxgDbRm7MUxbp0
+    - name: ansible
+      privilege: 15
+      role: network-admin
+      # Password set to "ansible".
+      sha512_password: $6$7u4j1rkb3VELgcZE$EJt2Qff8kd/TapRoci0XaIZsL4tFzgq1YZBLD9c6f/knXzvcYY0NcMKndZeCv0T268knGKhOEwZAxqKjlMm920
+    - name: mcp-reader 
+      privilege: 15
+      role: mcp
+      # Password set to "mcp-reader".
+      sha512_password: $6$dUHpoD05skR8gUA1$ftIZUl4zhkVHEhaJURJmD.ZC8fCSFZhYqv/1qr8Mzrl.Z.0lhz8M7hF4pm.uXoCplRhkXmfjaL.rSGSzdRlIH/
+  authorization:
+    exec:
+      default: local
+    commands:
+      all_default: local

@@ -1,0 +1,30 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "containerEnv": {
+        "EOS_MCP_USERNAME": "${localEnv:EOS_MCP_USERNAME}",
+        "EOS_MCP_PASSWORD": "${localEnv:EOS_MCP_PASSWORD}",
+        "EOS_MCP_INVENTORY": "${containerWorkspaceFolder}/avd/inventory.yml"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "srl-labs.vscode-containerlab",
+                "packetanglers.eos-linter",
+                "openai.chatgpt"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python3",
+                "workbench.editorAssociations": {
+                    "*.md": "vscode.markdown.preview.editor"
+                }
+            }
+        }
+    },
+    "postStartCommand": "bash \"${containerWorkspaceFolder}/.devcontainer/post-start.sh\"",
+    "remoteUser": "avd",
+    "mounts": [
+        "source=${localEnv:HOME}/Downloads/eos-mcp-server/skills,target=/opt/eos-mcp-skills,type=bind,readonly"
+    ]
+}

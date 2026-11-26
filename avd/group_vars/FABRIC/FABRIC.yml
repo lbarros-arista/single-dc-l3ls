@@ -1,0 +1,102 @@
+---
+
+fabric_name: FABRIC
+
+eos_designs_documentation:
+  topology_csv: true
+  p2p_links_csv: true
+
+mgmt_gateway: 172.16.1.1
+ipv6_mgmt_gateway: 2001:db8:feed:beef::1
+
+mgmt_interface_settings:
+  description: OOB_MANAGEMENT
+  vrf: MGMT
+  interface: Management1
+  lldp:
+    transmit: false
+    receive: false
+
+management_eapi:
+  enabled: true
+  vrfs: 
+    - name: use_mgmt_interface_vrf
+      enabled: true
+
+custom_structured_configuration_transceiver_qsfp_default_mode_4x10: false
+
+custom_structured_configuration_roles:
+  - name: mcp
+    sequence_numbers:
+      - sequence: 10
+        action: permit
+        command: "ping .*"
+      - sequence: 20
+        action: permit
+        command: "traceroute .*"
+      - sequence: 30
+        action: permit
+        command: "show .*"
+      - sequence: 40
+        action: permit
+        command: "tcpdump .*"
+      - sequence: 50
+        action: permit
+        command: "enable"
+      - sequence: 60
+        action: deny
+        command: "exit"
+      - sequence: 70
+        action: deny
+        command: ".*"
+
+custom_structured_configuration_mac_address_table:
+  aging_time: 1800
+    
+custom_structured_configuration_arp:
+  aging: 
+    timeout_default: 1500
+
+custom_structured_configuration_vlans:
+  - id: 1
+    name: unused
+    state: "suspend"
+
+underlay_routing_protocol: ebgp
+overlay_routing_protocol: ebgp
+evpn_overlay_bgp_rtc: true
+evpn_multicast: true
+underlay_multicast_pim_sm: true
+
+p2p_uplinks_mtu: 9000
+default_interface_mtu: 9000
+
+internal_vlan_order: 
+  allocation: ascending
+  range:
+    beginning: 4001
+    ending: 4092
+
+mlag_ibgp_peering_vrfs:
+  base_vlan: 2950
+
+bfd_multihop:
+  interval: 60000
+  min_rx: 60000
+  multiplier: 3
+
+dns_settings:
+  domain: 'fabric.local'
+  servers:
+    - vrf: use_mgmt_interface_vrf
+      ip_address: 8.8.8.8
+    - vrf: use_mgmt_interface_vrf
+      ip_address: 8.8.4.4
+
+ntp_settings:
+  server_vrf: use_mgmt_interface_vrf
+  servers:
+    - name: 0.nl.pool.ntp.org
+    - name: 1.nl.pool.ntp.org
+    - name: 2.nl.pool.ntp.org
+    - name: 3.nl.pool.ntp.org

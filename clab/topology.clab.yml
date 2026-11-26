@@ -1,0 +1,203 @@
+---
+name: AVD
+
+prefix: ""
+
+mgmt:
+  network: MGMT
+  ipv4-subnet: 172.16.1.0/24
+  ipv6-subnet: 2001:db8:feed:beef::/64
+
+topology:
+  defaults:
+    startup-delay: 5
+  kinds:
+    arista_ceos:
+      image: arista/ceos:latest
+    linux:
+      image: lab-server:latest
+  nodes:
+###############################################
+#################### DC1 ######################
+###############################################
+    acb-spine1:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.11
+      mgmt-ipv6: 2001:db8:feed:beef::11
+      startup-config: ../avd/intended/configs/acb-spine1.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050CX3-32S_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5011:443/tcp
+        - 4011:22/tcp
+    acb-spine2:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.12
+      mgmt-ipv6: 2001:db8:feed:beef::12
+      startup-config: ../avd/intended/configs/acb-spine2.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050CX3-32S_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5012:443/tcp
+        - 4012:22/tcp
+    acb-leaf1a:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.13
+      mgmt-ipv6: 2001:db8:feed:beef::13
+      startup-config: ../avd/intended/configs/acb-leaf1a.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5013:443/tcp
+        - 4013:22/tcp
+    acb-leaf1b:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.14
+      mgmt-ipv6: 2001:db8:feed:beef::14
+      startup-config: ../avd/intended/configs/acb-leaf1b.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5014:443/tcp
+        - 4014:22/tcp
+    acb-leaf2a:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.15
+      mgmt-ipv6: 2001:db8:feed:beef::15
+      startup-config: ../avd/intended/configs/acb-leaf2a.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5015:443/tcp
+        - 4015:22/tcp
+    acb-leaf2b:
+      kind: arista_ceos
+      mgmt-ipv4: 172.16.1.16
+      mgmt-ipv6: 2001:db8:feed:beef::16
+      startup-config: ../avd/intended/configs/acb-leaf2b.cfg
+      binds:
+        - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+      ports:
+        # - 5016:443/tcp
+        - 4016:22/tcp
+    # acb-leaf3a:
+    #   kind: arista_ceos
+    #   mgmt-ipv4: 172.16.1.17
+    #   mgmt-ipv6: 2001:db8:feed:beef::17
+    #   startup-config: ../avd/intended/configs/acb-leaf3a.cfg
+    #   binds:
+    #     - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+    #   ports:
+    #     # - 5017:443/tcp
+    #     - 4017:22/tcp
+    # acb-leaf3b:
+    #   kind: arista_ceos
+    #   mgmt-ipv4: 172.16.1.18
+    #   mgmt-ipv6: 2001:db8:feed:beef::18
+    #   startup-config: ../avd/intended/configs/acb-leaf3b.cfg
+    #   binds:
+    #     - ../clab/eos-intf-mapping/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+    #   ports:
+    #     # - 5018:443/tcp
+    #     - 4018:22/tcp
+###############################################
+################### HOSTS #####################
+############################################### 
+    server1a:
+      kind: linux
+      mgmt-ipv4: 172.16.1.90
+      mgmt-ipv6: 2001:db8:feed:beef::90
+      binds:
+        - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+      exec:
+        - bash /tmp/setup-namespaces.sh 1
+      ports:
+        - 4090:22/tcp
+    server1b:
+      kind: linux
+      mgmt-ipv4: 172.16.1.91
+      mgmt-ipv6: 2001:db8:feed:beef::91
+      binds:
+        - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+      exec:
+        - bash /tmp/setup-namespaces.sh 2
+      ports:
+        - 4091:22/tcp
+    server2a:
+      kind: linux
+      mgmt-ipv4: 172.16.1.92
+      mgmt-ipv6: 2001:db8:feed:beef::92
+      binds:
+        - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+      exec:
+        - bash /tmp/setup-namespaces.sh 3
+      ports:
+        - 4092:22/tcp
+    server2b:
+      kind: linux
+      mgmt-ipv4: 172.16.1.93
+      mgmt-ipv6: 2001:db8:feed:beef::93
+      binds:
+        - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+      exec:
+        - bash /tmp/setup-namespaces.sh 4
+      ports:
+        - 4093:22/tcp
+    # server3a:
+    #   kind: linux
+    #   mgmt-ipv4: 172.16.1.94
+    #   mgmt-ipv6: 2001:db8:feed:beef::94
+    #   binds:
+    #     - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+    #   exec:
+    #     - bash /tmp/setup-namespaces.sh 5
+    #   ports:
+    #     - 4094:22/tcp
+    # server3b:
+    #   kind: linux
+    #   mgmt-ipv4: 172.16.1.95
+    #   mgmt-ipv6: 2001:db8:feed:beef::95
+    #   binds:
+    #     - ../server/setup-namespaces.sh:/tmp/setup-namespaces.sh:ro
+    #   exec:
+    #     - bash /tmp/setup-namespaces.sh 6
+    #   ports:
+    #     - 4095:22/tcp
+###############################################
+################## LINKS ######################
+###############################################
+  links:
+# DC1
+# Host Facing Links
+    - endpoints: ["server1a:eth1", "acb-leaf1a:eth1"]
+    - endpoints: ["server1a:eth2", "acb-leaf1b:eth1"]
+    - endpoints: ["server1b:eth1", "acb-leaf1a:eth2"]
+    - endpoints: ["server1b:eth2", "acb-leaf1b:eth2"]
+    - endpoints: ["server2a:eth1", "acb-leaf2a:eth1"]
+    - endpoints: ["server2a:eth2", "acb-leaf2b:eth1"]
+    - endpoints: ["server2b:eth1", "acb-leaf2a:eth2"]
+    - endpoints: ["server2b:eth2", "acb-leaf2b:eth2"]
+    # - endpoints: ["server3a:eth1", "acb-leaf3a:eth1"]
+    # - endpoints: ["server3a:eth2", "acb-leaf3b:eth1"]
+    # - endpoints: ["server3b:eth1", "acb-leaf3a:eth2"]
+    # - endpoints: ["server3b:eth2", "acb-leaf3b:eth2"]
+# Leaf-Spine Links
+    - endpoints: ["acb-leaf1a:eth55", "acb-spine1:eth1"]
+    - endpoints: ["acb-leaf1a:eth56", "acb-spine2:eth1"]
+    - endpoints: ["acb-leaf1b:eth55", "acb-spine1:eth2"]
+    - endpoints: ["acb-leaf1b:eth56", "acb-spine2:eth2"]
+    - endpoints: ["acb-leaf2a:eth55", "acb-spine1:eth3"]
+    - endpoints: ["acb-leaf2a:eth56", "acb-spine2:eth3"]
+    - endpoints: ["acb-leaf2b:eth55", "acb-spine1:eth4"]
+    - endpoints: ["acb-leaf2b:eth56", "acb-spine2:eth4"]
+    # - endpoints: ["acb-leaf3a:eth55", "acb-spine1:eth5"]
+    # - endpoints: ["acb-leaf3a:eth56", "acb-spine2:eth5"]
+    # - endpoints: ["acb-leaf3b:eth55", "acb-spine1:eth6"]
+    # - endpoints: ["acb-leaf3b:eth56", "acb-spine2:eth6"]
+# MLAG Peer Links
+    - endpoints: ["acb-leaf1a:eth53", "acb-leaf1b:eth53"]
+    - endpoints: ["acb-leaf1a:eth54", "acb-leaf1b:eth54"]
+    - endpoints: ["acb-leaf2a:eth53", "acb-leaf2b:eth53"]
+    - endpoints: ["acb-leaf2a:eth54", "acb-leaf2b:eth54"]
+    # - endpoints: ["acb-leaf3a:eth53", "acb-leaf3b:eth53"]
+    # - endpoints: ["acb-leaf3a:eth54", "acb-leaf3b:eth54"]

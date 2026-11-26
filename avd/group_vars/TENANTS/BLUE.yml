@@ -1,0 +1,65 @@
+---
+
+BLUE:
+  - name: "BLUE"
+    mac_vrf_vni_base: 20000
+    enable_mlag_ibgp_peering_vrfs: true
+    igmp_snooping:
+      querier:
+        enabled: true
+        version: 3
+      fast_leave: false
+    evpn_l2_multicast:
+      enabled: true
+      underlay_l2_multicast_group_ipv4_pool: 232.20.16.0/20
+    evpn_l3_multicast:
+      enabled: true
+      evpn_underlay_l3_multicast_group_ipv4_pool: 232.20.0.0/20
+    vrfs:
+      - name: "BLUE"
+        vrf_vni: 1002
+        vtep_diagnostic:
+          loopback: 102
+          loopback_ip_range: 10.100.102.0/24
+          loopback_ipv6_range: 2001:db8:100:102::/64
+        svis:
+          - id: 60
+            name: v60
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.60.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:60::254/64
+          - id: 70
+            name: v70
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.70.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:70::254/64
+          - id: 80
+            name: v80
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.80.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:80::254/64
+          - id: 90
+            name: v90
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.90.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:90::254/64
+          - id: 100
+            name: v100
+            enabled: true
+            mtu: 9000
+            tags: [RED]
+            ip_address_virtual: 10.10.100.254/24
+            ipv6_address_virtuals:
+              - 2001:db8:10:100::254/64

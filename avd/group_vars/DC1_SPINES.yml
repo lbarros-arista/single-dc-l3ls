@@ -1,0 +1,24 @@
+---
+
+type: spine
+
+custom_structured_configuration_switchport_default:
+  mode: routed
+
+spine:
+  defaults:
+    platform: ceos
+    loopback_ipv4_pool: 10.1.255.0/24
+    bgp_as: 65100
+    bgp_defaults:
+      - timers bgp 5 15
+      - neighbor default send-community
+  nodes:
+    - name: acb-spine1
+      id: 1
+      mgmt_ip: 172.16.1.11/24
+      ipv6_mgmt_ip: 2001:db8:feed:beef::11/64
+    - name: acb-spine2
+      id: 2
+      mgmt_ip: 172.16.1.12/24
+      ipv6_mgmt_ip: 2001:db8:feed:beef::12/64

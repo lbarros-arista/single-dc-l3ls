@@ -1,0 +1,5 @@
+---
+
+network_services_keys:
+  - name: RED
+  - name: BLUE

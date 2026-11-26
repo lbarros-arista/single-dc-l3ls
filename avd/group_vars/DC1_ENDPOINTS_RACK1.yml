@@ -1,0 +1,25 @@
+---
+servers:
+  - name: acb-r1-server1
+    rack: ACB-RACK1
+    adapters:
+      - endpoint_ports: [ Ethernet1, Ethernet2 ]
+        switch_ports: [ Ethernet1, Ethernet1 ]
+        switches: [ acb-leaf1a, acb-leaf1b ] 
+        profile: TRUNK_DC1
+        port_channel:
+          description: PortChannel1
+          channel_id: 1
+          mode: active
+
+  - name: acb-r1-server2
+    rack: ACB-RACK1
+    adapters:
+      - endpoint_ports: [ Ethernet1, Ethernet2 ]
+        switch_ports: [ Ethernet2, Ethernet2 ]
+        switches: [ acb-leaf1a, acb-leaf1b ] 
+        profile: TRUNK_DC1
+        port_channel:
+          description: PortChannel2
+          channel_id: 2
+          mode: active
